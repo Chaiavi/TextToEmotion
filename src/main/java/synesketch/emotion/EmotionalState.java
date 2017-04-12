@@ -23,8 +23,6 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import processing.core.PApplet;
-
 import synesketch.SynesketchState;
 
 /**
@@ -38,7 +36,7 @@ import synesketch.SynesketchState;
  * weight, sadness weight, fear weight, anger weight, disgust weight, surprise
  * weight. These specific emotions are defined by the class {@link Emotion}.
  * <li>Previous {@link EmotionalState} (so that whole emotional history of one
- * conversation can be accessed from the Processing applet ({@link PApplet})).
+ * conversation can be accessed from the Processing applet ).
  * </ul>
  * <p>
  * Weights have values between 0 and 1 (0 for no emotion, 1 for full emotion,
