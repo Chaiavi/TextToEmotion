@@ -6,7 +6,7 @@
 
     <groupId>org.chaiware</groupId>
     <artifactId>TextToEmotion</artifactId>
-    <version>0.6</version>
+    <version>0.7</version>
     <name>TextToEmotion</name>
 
     <properties>
@@ -37,7 +37,7 @@
                     <archive>
                         <manifest>
                             <!-- Jar file entry point -->
-                            <mainClass>org.chaiware.text2emotion.app.TextToEmotion</mainClass>
+                            <mainClass>org.chaiware.app.TextToEmotion</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
