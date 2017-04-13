@@ -1,4 +1,4 @@
-package synesketch.emotion;
+package org.chaiware.emotion;
 
 /**
  * Represents one emotion, with it's type and weight.

@@ -1,9 +1,9 @@
-package synesketch.emotion.util;
+package org.chaiware.emotion.util;
 
 import java.io.IOException;
 import java.util.List;
 
-import synesketch.emotion.AffectWord;
+import org.chaiware.emotion.AffectWord;
 
 /**
  * Utility class for some heuristic alghoritms used for text processing.

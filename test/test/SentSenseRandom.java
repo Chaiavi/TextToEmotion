@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import synesketch.emotion.EmotionalState;
-import synesketch.emotion.Empathyscope;
+import org.chaiware.emotion.EmotionalState;
+import org.chaiware.emotion.Empathyscope;
 
 
 public class SentSenseRandom {

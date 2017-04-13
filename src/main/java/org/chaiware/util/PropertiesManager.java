@@ -1,4 +1,4 @@
-package synesketch.util;
+package org.chaiware.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;

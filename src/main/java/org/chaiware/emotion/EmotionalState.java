@@ -1,11 +1,11 @@
-package synesketch.emotion;
+package org.chaiware.emotion;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import synesketch.SynesketchState;
+import org.chaiware.SynesketchState;
 
 /**
  * Defines emotional content of the text.

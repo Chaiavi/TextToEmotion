@@ -1,4 +1,4 @@
-package synesketch.emotion.util;
+package org.chaiware.emotion.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,8 +6,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import synesketch.emotion.AffectWord;
-import synesketch.util.PropertiesManager;
+import org.chaiware.emotion.AffectWord;
+import org.chaiware.util.PropertiesManager;
 
 /**
  * Utility class for some text processing alghoritms

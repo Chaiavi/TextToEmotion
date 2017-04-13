@@ -13,8 +13,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import synesketch.emotion.EmotionalState;
-import synesketch.emotion.Empathyscope;
+import org.chaiware.emotion.EmotionalState;
+import org.chaiware.emotion.Empathyscope;
 
 
 public class SentSense {

@@ -1,4 +1,4 @@
-package synesketch.emotion;
+package org.chaiware.emotion;
 
 /**
  * Represents one unit from the Synesketch Lexicon: a word associated with

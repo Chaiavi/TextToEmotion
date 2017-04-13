@@ -1,13 +1,13 @@
-package synesketch.emotion;
+package org.chaiware.emotion;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
-import synesketch.emotion.util.HeuristicsUtility;
-import synesketch.emotion.util.LexicalUtility;
-import synesketch.emotion.util.ParsingUtility;
+import org.chaiware.emotion.util.HeuristicsUtility;
+import org.chaiware.emotion.util.LexicalUtility;
+import org.chaiware.emotion.util.ParsingUtility;
 
 /**
  * Defines logic for transfering textual affect information -- emotional

@@ -1,4 +1,4 @@
-package synesketch.emotion.util;
+package org.chaiware.emotion.util;
 
 import java.text.BreakIterator;
 import java.util.ArrayList;

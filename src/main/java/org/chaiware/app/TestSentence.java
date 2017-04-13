@@ -1,9 +1,9 @@
-package synesketch.app;
+package org.chaiware.app;
 
 import java.io.IOException;
 
-import synesketch.emotion.EmotionalState;
-import synesketch.emotion.Empathyscope;
+import org.chaiware.emotion.EmotionalState;
+import org.chaiware.emotion.Empathyscope;
 
 public class TestSentence {
 	

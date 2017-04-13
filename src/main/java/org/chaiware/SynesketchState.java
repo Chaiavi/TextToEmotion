@@ -1,9 +1,11 @@
-package synesketch;
+package org.chaiware;
+
+import org.chaiware.emotion.EmotionalState;
 
 /**
  * An abstract class which contains data textualy interpreted by the
  * <p>
- * For example, it's subclass {@link synesketch.emotion.EmotionalState} contains
+ * For example, it's subclass {@link EmotionalState} contains
  * emotional information about the piece of text.
  */
 public abstract class SynesketchState {
