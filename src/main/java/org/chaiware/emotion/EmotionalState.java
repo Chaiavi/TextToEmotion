@@ -43,8 +43,7 @@ public class EmotionalState {
 	/**
 	 * Class constructor which sets the text.
 	 * 
-	 * @param text
-	 *            String representing the text
+	 * @param text String representing the text
 	 */
 	public EmotionalState(String text) {
 
@@ -57,15 +56,11 @@ public class EmotionalState {
 	 * Class constructor which sets the text, general emotional weight, emotional
 	 * valence, and all of the emotional weights (in a form of a SortedSet).
 	 * 
-	 * @param text
-	 *            {@link String} representing the text
-	 * @param emotions
-	 *            {@link SortedSet} containing all of the specific Ekman emotinal
+	 * @param text {@link String} representing the text
+	 * @param emotions {@link SortedSet} containing all of the specific Ekman emotinal
 	 *            weights, defined by the {@link Emotion} class
-	 * @param generalWeight
-	 *            double representing the general emotional weight
-	 * @param valence
-	 *            int representing the emotinal valence
+	 * @param generalWeight double representing the general emotional weight
+	 * @param valence int representing the emotinal valence
 	 */
 	public EmotionalState(String text, SortedSet<Emotion> emotions,
 			double generalWeight, int valence) {
@@ -81,20 +76,15 @@ public class EmotionalState {
 	 * 
 	 * @return Emotion with the highest weight
 	 */
-
 	public Emotion getStrongestEmotion() {
 		return emotions.first();
 	}
 
 	/**
-	 * Returns several emotions ({@link Emotion} instances) with the highest
-	 * weight.
+	 * Returns several emotions ({@link Emotion} instances) with the highest weight.
 	 * 
-	 * @param stop
-	 *            int representing the number of emotions which is to searched
-	 *            for
-	 * @return list of emotions ({@link Emotion} instances) with the highest
-	 *         weight
+	 * @param stop int representing the number of emotions which is to searched for
+	 * @return list of emotions ({@link Emotion} instances) with the highest weight
 	 */
 	public List<Emotion> getFirstStrongestEmotions(int stop) {
 		List<Emotion> value = new ArrayList<Emotion>();
@@ -105,6 +95,7 @@ public class EmotionalState {
 			value.add(e);
 			stop--;
 		}
+
 		return value;
 	}
 
@@ -120,6 +111,7 @@ public class EmotionalState {
 				value = e;
 			}
 		}
+
 		return value;
 	}
 
@@ -144,6 +136,7 @@ public class EmotionalState {
 				value = e;
 			}
 		}
+
 		return value;
 	}
 
@@ -168,6 +161,7 @@ public class EmotionalState {
 				value = e;
 			}
 		}
+
 		return value;
 	}
 
@@ -192,6 +186,7 @@ public class EmotionalState {
 				value = e;
 			}
 		}
+
 		return value;
 	}
 
@@ -216,6 +211,7 @@ public class EmotionalState {
 				value = e;
 			}
 		}
+
 		return value;
 	}
 
@@ -240,6 +236,7 @@ public class EmotionalState {
 				value = e;
 			}
 		}
+
 		return value;
 	}
 
@@ -300,11 +297,11 @@ public class EmotionalState {
 	}
 
 	/**
-	 * Transforms emotional data into a descriptional sentence ('toString'
-	 * method)
+	 * Transforms emotional data into a descriptional sentence ('toString' method)
 	 * 
 	 * @return String description of a emotinal data
 	 */
+	@Override
 	public String toString() {
 		return "Text: " + text + "\nGeneral weight: " + generalWeight
 		+ "\nValence: " + valence + "\nHappiness weight: "
@@ -314,22 +311,4 @@ public class EmotionalState {
 		+ getDisgustWeight() + "\nSurprise weight: "
 		+ getSurpriseWeight() + "\n";
 	}
-
-	/**
-	 * Transforms data into a String, in which the data is being separated by the argument  
-	 * 
-	 * @return String description of a emotinal data
-	 */
-	public String toString(String separator) {
-		return text + separator 
-		+ generalWeight + separator 
-		+ valence + separator
-		+ getHappinessWeight() + separator
-		+ getSadnessWeight() + separator 
-		+ getAngerWeight() + separator 
-		+ getFearWeight() + separator
-		+ getDisgustWeight() + separator
-		+ getSurpriseWeight();
-	}
-
 }

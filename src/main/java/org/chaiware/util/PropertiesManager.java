@@ -12,7 +12,6 @@ import java.util.Properties;
 public class PropertiesManager {
 	
 	private Properties props;
-	
 	private File file;
 	
 	/**
@@ -23,11 +22,8 @@ public class PropertiesManager {
 	
 	public PropertiesManager(String fileName) {
 		props = new Properties();
-		//URL fileURL = this.getClass().getResource(fileName); 
-		//InputStream is = this.getClass().getResourceAsStream(fileName);
-		//file = new File(fileURL.getFile()); 
+
 		try {
-			//props.loadFromXML(new FileInputStream(file));
 			props.loadFromXML(this.getClass().getResourceAsStream(fileName));
 		}  catch (IOException e) {
 			props = new Properties();
@@ -68,6 +64,7 @@ public class PropertiesManager {
 		for (int i = 0; i < value.length; i++) {
 			value[i] = Integer.parseInt(strings[i], 16);
 		}
+
 		return value;
 	}
 	
@@ -102,7 +99,7 @@ public class PropertiesManager {
 	}
 	
 	/**
-	 * Stores propeties to XML propety file. 
+	 * Stores propeties to XML property file.
 	 */
 	public void save(){
 		try {
@@ -113,6 +110,5 @@ public class PropertiesManager {
 			e.printStackTrace();
 		}	
 	}
-
 }
  

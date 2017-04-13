@@ -10,13 +10,12 @@ import org.chaiware.emotion.util.LexicalUtility;
 import org.chaiware.emotion.util.ParsingUtility;
 
 /**
- * Defines logic for transfering textual affect information -- emotional
- * manifestations recognised in text -- into visual output.
+ * Defines logic for transferring textual affect information, emotional
+ * manifestations recognised in text into visual output.
  */
 public class Empathyscope {
 
 	private static Empathyscope instance;
-
 	private LexicalUtility lexUtil;
 
 	private Empathyscope() throws IOException {
@@ -33,6 +32,7 @@ public class Empathyscope {
 		if (instance == null) {
 			instance = new Empathyscope();
 		}
+
 		return instance;
 	}
 
@@ -40,10 +40,8 @@ public class Empathyscope {
 	 * Textual affect sensing behavior, the main NLP alghoritm which uses
 	 * Synesketch Lexicon and several heuristic rules.
 	 * 
-	 * @param text
-	 *            String representing the text to be analysed
-	 * @return {@link EmotionalState} which represents data recognised from the
-	 *         text
+	 * @param text String representing the text to be analysed
+	 * @return {@link EmotionalState} which represents data recognised from the text
 	 * @throws IOException
 	 */
 	public EmotionalState feel(String text) throws IOException {
@@ -56,15 +54,11 @@ public class Empathyscope {
 			
 			System.out.println("- " + sentence);
 			
-			// we imploy 6 heuristic rules to adjust emotive weights of the
-			// words:
+			// we imploy 6 heuristic rules to adjust emotive weights of the words:
+			// (1) more exclamation signs in a sentence => more intensive emotive weights
+			double exclamationQoef = HeuristicsUtility.computeExclaminationQoef(sentence.toLowerCase());
 
-			// (1) more exclamination signs in a sentence => more intensive
-			// emotive weights
-			double exclaminationQoef = HeuristicsUtility
-			.computeExclaminationQoef(sentence.toLowerCase());
-
-			// (2) an exclamination mark next to a question mark => emotion of surprise
+			// (2) an exclamation mark next to a question mark => emotion of surprise
 			if (HeuristicsUtility.hasExclaminationQuestionMarks(sentence)) {
 				AffectWord emoWordSurprise = new AffectWord("?!");
 				emoWordSurprise.setSurpriseWeight(1.0);
@@ -73,8 +67,7 @@ public class Empathyscope {
 			
 			boolean hasNegation = false;
 			
-			List<String> splittedWords = ParsingUtility.splitWords(sentence,
-			" ");
+			List<String> splittedWords = ParsingUtility.splitWords(sentence," ");
 			String previousWord = "";
 			String negation = "";
 			
@@ -88,15 +81,14 @@ public class Empathyscope {
 					// (3) more emoticons with more 'emotive' signs (e.g. :DDDD)
 					// => more intensive emotive weights
 										
-					double emoticonCoef = HeuristicsUtility.computeEmoticonCoef(splittedWord, emoWord);
+					double emoticonCoef = HeuristicsUtility.computeEmoticonQoef(splittedWord, emoWord);
 					if (emoticonCoef == 1.0)
-						emoticonCoef = HeuristicsUtility.computeEmoticonCoef(splittedWord.toLowerCase(), emoWord);
-					emoWord.adjustWeights(exclaminationQoef * emoticonCoef);
+						emoticonCoef = HeuristicsUtility.computeEmoticonQoef(splittedWord.toLowerCase(), emoWord);
+					emoWord.adjustWeights(exclamationQoef * emoticonCoef);
 					affectWords.add(emoWord);
 				} else {
 
-					List<String> words = ParsingUtility
-					.parseWords(splittedWord);
+					List<String> words = ParsingUtility.parseWords(splittedWord);
 					
 					for (String word : words) {
 						
@@ -105,50 +97,43 @@ public class Empathyscope {
 						if (HeuristicsUtility.isNegation(word.toLowerCase())) {
 							negation = word;
 							hasNegation = true;
-							
 						}
+
 						emoWord = lexUtil.getAffectWord(word.toLowerCase());
 						if (emoWord == null)
 							emoWord = lexUtil.getEmoticonAffectWord(word.toLowerCase());
 						if (emoWord != null) {
 							
-							// (5) word is upper case => more intensive emotive
-							// weights
-							double capsLockCoef = HeuristicsUtility
-							.computeCapsLockQoef(word);
+							// (5) word is upper case => more intensive emotive weights
+							double capsLockCoef = HeuristicsUtility.computeCapsLockQoef(word);
 
 							// (6) previous word is a intensity modifier (e.g.
 							// "extremly") => more intensive emotive weights
-							double modifierCoef = HeuristicsUtility
-							.computeModifier(previousWord);
+							double modifierCoef = HeuristicsUtility.computeModifier(previousWord);
 							
 							// change the affect word!
-							if ((hasNegation) && 
-								(LexicalUtility.inTheSamePartOfTheSentence(negation, emoWord.getWord(), sentence))) {
+							if ((hasNegation) && (LexicalUtility.inTheSamePartOfTheSentence(negation, emoWord.getWord(), sentence))) {
 								emoWord.flipValence();
 							}
 
-							emoWord.adjustWeights(exclaminationQoef
-									* capsLockCoef * modifierCoef);
-
+							emoWord.adjustWeights(exclamationQoef * capsLockCoef * modifierCoef);
 							affectWords.add(emoWord);
-							
 						}
+
 						previousWord = word;
 					}
 				}
 			}
 		}
+
 		return createEmotionalState(text, affectWords);
 	}
 
-	private EmotionalState createEmotionalState(String text,
-			List<AffectWord> affectWords) {
+	private EmotionalState createEmotionalState(String text, List<AffectWord> affectWords) {
 		TreeSet<Emotion> emotions = new TreeSet<Emotion>();
 		int generalValence = 0;
 		double valence, generalWeight, happinessWeight, sadnessWeight, angerWeight, fearWeight, disgustWeight, surpriseWeight;
-		// valence = generalWeight = happinessWeight = sadnessWeight =
-		// angerWeight = fearWeight = disgustWeight = surpriseWeight = 0.0;
+
 		valence = 0.0;
 		generalWeight = 0.0;
 		happinessWeight = 0.0;
@@ -158,8 +143,7 @@ public class Empathyscope {
 		disgustWeight = 0.0;
 		surpriseWeight = 0.0;
 
-		// compute weights. maximum weights for the particular emotion are
-		// taken.
+		// compute weights. maximum weights for the particular emotion are taken.
 		for (AffectWord affectWord : affectWords) {
 			valence += affectWord.getGeneralValence();
 			if (affectWord.getGeneralWeight() > generalWeight)
@@ -177,6 +161,7 @@ public class Empathyscope {
 			if (affectWord.getSurpriseWeight() > surpriseWeight)
 				surpriseWeight = affectWord.getSurpriseWeight();
 		}
+
 		if (valence > 0)
 			generalValence = 1;
 		else if (valence < 0)
@@ -195,9 +180,8 @@ public class Empathyscope {
 		if (surpriseWeight > 0)
 			emotions.add(new Emotion(surpriseWeight, Emotion.SURPRISE));
 		if (emotions.isEmpty())
-			emotions.add(new Emotion((0.2 + generalWeight) / 1.2,
-					Emotion.NEUTRAL));
+			emotions.add(new Emotion((0.2 + generalWeight) / 1.2, Emotion.NEUTRAL));
+
 		return new EmotionalState(text, emotions, generalWeight, generalValence);
 	}
-
 }

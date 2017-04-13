@@ -10,21 +10,20 @@ import org.chaiware.emotion.AffectWord;
 import org.chaiware.util.PropertiesManager;
 
 /**
- * Utility class for some text processing alghoritms
+ * Utility class for some text processing algorithms
  */
 public class LexicalUtility {
 
 	private static LexicalUtility instance;
 
-	private String fileNameLexicon = "/data/lex/lexicon.txt";
-	private String fileNameEmoticons = "/data/lex/lexicon_emoticons.txt";
-	private String fileNameProperties = "/data/lex/keywords.xml";
+	private String FILENAME_LEXICON = "/data/lex/lexicon.txt";
+	private String FILENAME_EMOTICONS = "/data/lex/lexicon_emoticons.txt";
+	private String FILENAME_PROPERTIES = "/data/lex/keywords.xml";
 
 	private List<AffectWord> affectWords;
 	private List<AffectWord> emoticons;
 
 	private List<String> negations;
-
 	private List<String> intensityModifiers;
 
 	private double normalisator = 1;
@@ -32,13 +31,11 @@ public class LexicalUtility {
 	private LexicalUtility() throws IOException {
 		affectWords = new ArrayList<AffectWord>();
 		emoticons = new ArrayList<AffectWord>();
-		PropertiesManager pm = new PropertiesManager(fileNameProperties);
-		negations = ParsingUtility
-		.splitWords(pm.getProperty("negations"), ", ");
-		intensityModifiers = ParsingUtility.splitWords(pm
-				.getProperty("intensity.modifiers"), ", ");
-		parseLexiconFile(affectWords, fileNameLexicon);
-		parseLexiconFile(emoticons, fileNameEmoticons);
+		PropertiesManager pm = new PropertiesManager(FILENAME_PROPERTIES);
+		negations = ParsingUtility.splitWords(pm.getProperty("negations"), ", ");
+		intensityModifiers = ParsingUtility.splitWords(pm.getProperty("intensity.modifiers"), ", ");
+		parseLexiconFile(affectWords, FILENAME_LEXICON);
+		parseLexiconFile(emoticons, FILENAME_EMOTICONS);
 	}
 
 	/**
@@ -51,35 +48,31 @@ public class LexicalUtility {
 		if (instance == null) {
 			instance = new LexicalUtility();
 		}
+
 		return instance;
 	}
 
-	private void parseLexiconFile(List<AffectWord> wordList, String fileName)
-	throws IOException {
-		// URL fileURL = this.getClass().getResource(fileName);
-		// File file = new File(fileURL.getFile());
-		// BufferedReader in = new BufferedReader(new InputStreamReader(new
-		// FileInputStream(file), "UTF8"));
-		BufferedReader in = new BufferedReader(new InputStreamReader(this
-				.getClass().getResourceAsStream(fileName), "UTF8"));
+	private void parseLexiconFile(List<AffectWord> wordList, String fileName) throws IOException {
+
+		BufferedReader in = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(fileName), "UTF8"));
 		String line = in.readLine();
 		while (line != null) {
 			AffectWord record = parseLine(line);
 			wordList.add(record);
 			line = in.readLine();
 		}
+
 		in.close();
 	}
 
 	/**
-	 * Parses one line of the Synesketch Lexicon and returns the
-	 * {@link AffectWord}
+	 * Parses one line of the Synesketch Lexicon and returns the {@link AffectWord}
 	 * 
-	 * @param line
-	 *            {@link String} representing the line of the Synesketch Lexicon
+	 * @param line {@link String} representing the line of the Synesketch Lexicon
 	 * @return {@link AffectWord}
 	 */
 	private AffectWord parseLine(String line) {
+
 		AffectWord value;
 		String[] text = line.split(" ");
 		String word = text[0];
@@ -91,16 +84,15 @@ public class LexicalUtility {
 		double disgustWeight = Double.parseDouble(text[6]);
 		double surpriseWeight = Double.parseDouble(text[7]);
 		value = new AffectWord(word, generalWeight, happinessWeight,
-				sadnessWeight, angerWeight, fearWeight, disgustWeight,
-				surpriseWeight, normalisator);
+				sadnessWeight, angerWeight, fearWeight, disgustWeight, surpriseWeight, normalisator);
+
 		return value;
 	}
 
 	/**
 	 * Returns the instance of {@link AffectWord} for the given word.
 	 * 
-	 * @param word
-	 *            {@link String} representing the word
+	 * @param word {@link String} representing the word
 	 * @return {@link AffectWord}
 	 */
 	public AffectWord getAffectWord(String word) {
@@ -109,15 +101,14 @@ public class LexicalUtility {
 				return affectWord.clone();
 			}
 		}
+
 		return null;
 	}
 
 	/**
-	 * Returns the instance of {@link AffectWord} for the given word, which is
-	 * emoticon.
+	 * Returns the instance of {@link AffectWord} for the given word, which is emoticon.
 	 * 
-	 * @param word
-	 *            {@link String} representing the word
+	 * @param word {@link String} representing the word
 	 * @return {@link AffectWord}
 	 */
 	public AffectWord getEmoticonAffectWord(String word) {
@@ -126,6 +117,7 @@ public class LexicalUtility {
 				return affectWordEmoticon.clone();
 			}
 		}
+
 		for (AffectWord affectWordEmoticon : emoticons) {
 			String emoticon = affectWordEmoticon.getWord();
 			if (ParsingUtility.containsFirst(word, emoticon)) {
@@ -133,18 +125,18 @@ public class LexicalUtility {
 				return affectWordEmoticon.clone();
 			}
 		}
+
 		return null;
 	}
 
 	/**
-	 * Returns all instances of {@link AffectWord} which represent emoticons for
-	 * the given sentence.
+	 * Returns all instances of {@link AffectWord} which represent emoticons for the given sentence.
 	 * 
-	 * @param sentence
-	 *            {@link String} representing the sentence
+	 * @param sentence {@link String} representing the sentence
 	 * @return the list of {@link AffectWord} instances
 	 */
 	public List<AffectWord> getEmoticonWords(String sentence) {
+
 		List<AffectWord> value = new ArrayList<AffectWord>();
 		for (AffectWord emoticon : emoticons) {
 			String emoticonWord = emoticon.getWord();
@@ -153,6 +145,7 @@ public class LexicalUtility {
 				value.add(emoticon);
 			}
 		}
+
 		return value;
 	}
 
@@ -168,8 +161,7 @@ public class LexicalUtility {
 	/**
 	 * Returns true if the word is a negation.
 	 * 
-	 * @param word
-	 *            {@link String} which represents a word
+	 * @param word {@link String} which represents a word
 	 * @return boolean, true is the word is a negation
 	 */
 	public boolean isNegation(String word) {
@@ -179,8 +171,7 @@ public class LexicalUtility {
 	/**
 	 * Returns true if the word is an intensity modifier.
 	 * 
-	 * @param word
-	 *            {@link String} which represents a word
+	 * @param word {@link String} which represents a word
 	 * @return boolean, true is the word is an intensity modifier
 	 */
 	public boolean isIntensityModifier(String word) {
@@ -191,8 +182,7 @@ public class LexicalUtility {
 	 * Returns true if the word and the negation are in the same
 	 * part of the sentence, i.e. divided by a interpunction mark.
 	 * 
-	 * @param word
-	 *            {@link String} which represents a word
+	 * @param word {@link String} which represents a word
 	 * @return boolean, true is the word is an intensity modifier
 	 */
 	public static boolean inTheSamePartOfTheSentence(String negation, String word, String sentence) {
@@ -205,17 +195,17 @@ public class LexicalUtility {
 			i = j + word.length();
 			j = tmp;
 		}
+
 		for (int k = i; k < j; k++) {
 			if ((sentence.charAt(k) == ',') ||
 				(sentence.charAt(k) == '.') ||
 				(sentence.charAt(k) == ';') ||
 				(sentence.charAt(k) == ':') ||
-				//(sentence.charAt(k) == '\'') ||
 				(sentence.charAt(k) == '-')) {
 				return false;
 			}
 		}
+
 		return true;
 	}
-
 }
