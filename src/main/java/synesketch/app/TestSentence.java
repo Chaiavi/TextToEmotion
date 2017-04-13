@@ -1,8 +1,3 @@
-/**
- * @author Uros Krcadinac
- * 18-Sep-10
- * @version 0.1
- */
 package synesketch.app;
 
 import java.io.IOException;

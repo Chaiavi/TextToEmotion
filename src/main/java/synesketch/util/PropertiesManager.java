@@ -7,10 +7,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * A class for handling XML property files.  
- * 
- * @author Uros Krcadinac email: uros@krcadinac.com
- * @version 1.0
+ * A class for handling XML property files.
  */
 public class PropertiesManager {
 	
