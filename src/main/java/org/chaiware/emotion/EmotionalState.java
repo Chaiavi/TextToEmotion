@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.chaiware.SynesketchState;
 
 /**
  * Defines emotional content of the text.
@@ -26,14 +25,12 @@ import org.chaiware.SynesketchState;
  * (negative, neutral, and positive emotion, respectively).
  * 
  */
-public class EmotionalState extends SynesketchState {
+public class EmotionalState {
 
+	private String text;
 	private double generalWeight = 0.0;
-
 	private int valence = 0;
-
 	private EmotionalState previous;
-
 	private SortedSet<Emotion> emotions;
 
 	/**
@@ -50,13 +47,14 @@ public class EmotionalState extends SynesketchState {
 	 *            String representing the text
 	 */
 	public EmotionalState(String text) {
-		super(text);
+
+		this.text = text;
 		emotions = new TreeSet<Emotion>();
 		emotions.add(new Emotion(1.0, Emotion.NEUTRAL));
 	}
 
 	/**
-	 * Class constuctor which sets the text, general emotional weight, emotional
+	 * Class constructor which sets the text, general emotional weight, emotional
 	 * valence, and all of the emotional weights (in a form of a SortedSet).
 	 * 
 	 * @param text
@@ -71,7 +69,8 @@ public class EmotionalState extends SynesketchState {
 	 */
 	public EmotionalState(String text, SortedSet<Emotion> emotions,
 			double generalWeight, int valence) {
-		super(text);
+
+		this(text);
 		this.generalWeight = generalWeight;
 		this.valence = valence;
 		this.emotions = emotions;
@@ -288,6 +287,16 @@ public class EmotionalState extends SynesketchState {
 	 */
 	public double getGeneralWeight() {
 		return generalWeight;
+	}
+
+	/**
+	 * Getter for the text used as an interpretation resource
+	 *
+	 * @return {@link String} representing the text
+	 */
+
+	public String getText() {
+		return text;
 	}
 
 	/**
