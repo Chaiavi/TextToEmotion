@@ -10,7 +10,7 @@ import org.chaiware.emotion.AffectWord;
 import org.chaiware.util.PropertiesManager;
 
 /**
- * Utility class for some text processing algorithms
+ * Utility class for some text processing algorithms (Singleton)
  */
 public class LexicalUtility {
 
@@ -26,11 +26,11 @@ public class LexicalUtility {
 	private List<String> negations;
 	private List<String> intensityModifiers;
 
-	private double normalisator = 1;
+	private final double NORMALISATOR = 1;
 
 	private LexicalUtility() throws IOException {
-		affectWords = new ArrayList<AffectWord>();
-		emoticons = new ArrayList<AffectWord>();
+		affectWords = new ArrayList();
+		emoticons = new ArrayList();
 		PropertiesManager pm = new PropertiesManager(FILENAME_PROPERTIES);
 		negations = ParsingUtility.splitWords(pm.getProperty("negations"), ", ");
 		intensityModifiers = ParsingUtility.splitWords(pm.getProperty("intensity.modifiers"), ", ");
@@ -54,21 +54,20 @@ public class LexicalUtility {
 
 	private void parseLexiconFile(List<AffectWord> wordList, String fileName) throws IOException {
 
-		BufferedReader in = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(fileName), "UTF8"));
-		String line = in.readLine();
-		while (line != null) {
-			AffectWord record = parseLine(line);
-			wordList.add(record);
-			line = in.readLine();
-		}
-
-		in.close();
+	  try (BufferedReader in = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(fileName), "UTF8"))){
+        String line = in.readLine();
+        while (line != null) {
+          AffectWord record = parseLine(line);
+          wordList.add(record);
+          line = in.readLine();
+        }
+      }
 	}
 
 	/**
-	 * Parses one line of the Synesketch Lexicon and returns the {@link AffectWord}
+	 * Parses one line of the Lexicon and returns the {@link AffectWord}
 	 * 
-	 * @param line {@link String} representing the line of the Synesketch Lexicon
+	 * @param line {@link String} representing the line of the Lexicon
 	 * @return {@link AffectWord}
 	 */
 	private AffectWord parseLine(String line) {
@@ -84,7 +83,7 @@ public class LexicalUtility {
 		double disgustWeight = Double.parseDouble(text[6]);
 		double surpriseWeight = Double.parseDouble(text[7]);
 		value = new AffectWord(word, generalWeight, happinessWeight,
-				sadnessWeight, angerWeight, fearWeight, disgustWeight, surpriseWeight, normalisator);
+				sadnessWeight, angerWeight, fearWeight, disgustWeight, surpriseWeight, NORMALISATOR);
 
 		return value;
 	}
@@ -137,7 +136,7 @@ public class LexicalUtility {
 	 */
 	public List<AffectWord> getEmoticonWords(String sentence) {
 
-		List<AffectWord> value = new ArrayList<AffectWord>();
+		List<AffectWord> value = new ArrayList ();
 		for (AffectWord emoticon : emoticons) {
 			String emoticonWord = emoticon.getWord();
 			if (sentence.contains(emoticonWord)) {

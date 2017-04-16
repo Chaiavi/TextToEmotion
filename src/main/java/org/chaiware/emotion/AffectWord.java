@@ -1,8 +1,10 @@
 package org.chaiware.emotion;
 
+import java.util.StringJoiner;
+
 /**
  * Represents one unit from the Lexicon: a word associated with
- * emotional meaning, and it's emotional weights and valence.
+ * emotional meaning, and its emotional weights and valence.
  * <p>
  * The Lexicon, which consists of several thousand words (with emoticons),
  * associates these attributes to a word:
@@ -152,12 +154,12 @@ public class AffectWord {
 	 * 
 	 * @return {@link AffectWord}, new duplicated object
 	 */
+	@Override
 	public AffectWord clone() {
 		AffectWord value = new AffectWord(word, generalWeight, happinessWeight,
-				sadnessWeight, angerWeight, fearWeight, disgustWeight,
-				surpriseWeight);
-		value.setStartsWithEmoticon(startsWithEmoticon);
+				sadnessWeight, angerWeight, fearWeight, disgustWeight, surpriseWeight);
 
+		value.setStartsWithEmoticon(startsWithEmoticon);
 		return value;
 	}
 
@@ -334,7 +336,7 @@ public class AffectWord {
 	}
 
 	/**
-	 * Sets the boolean value which determines does a word have specific
+	 * Gets the boolean value which determines if a word has specific
 	 * emotional weight for emotion types defined by Ekman: happiness, sadness,
 	 * fear, anger, disgust, and surprise.
 	 * 
@@ -345,15 +347,6 @@ public class AffectWord {
 		return getWeightSum() == 0;
 	}
 
-	/**
-	 * @return a string representation of the different weights of the emotions
-	 */
-	public String toString() {
-		return word + " " + generalWeight + " " + happinessWeight + " "
-				+ sadnessWeight + " " + angerWeight + " " + fearWeight + " "
-				+ disgustWeight + " " + surpriseWeight;
-	}
-
 	private double getValenceSum() {
 		return happinessWeight - sadnessWeight - angerWeight - fearWeight - disgustWeight;
 	}
@@ -361,4 +354,17 @@ public class AffectWord {
 	private double getWeightSum() {
 		return happinessWeight + sadnessWeight + angerWeight + fearWeight + disgustWeight + surpriseWeight;
 	}
+
+  /**
+   * @return a string representation of the different weights of the emotions
+   */
+  @Override
+  public String toString() {
+    StringJoiner sj = new StringJoiner(" ");
+    sj.add(word).add(Double.toString(generalWeight)).add(Double.toString(happinessWeight));
+    sj.add(Double.toString(sadnessWeight)).add(Double.toString(angerWeight)).add(Double.toString(fearWeight));
+    sj.add(Double.toString(disgustWeight)).add(Double.toString(surpriseWeight));
+
+    return sj.toString();
+  }
 }

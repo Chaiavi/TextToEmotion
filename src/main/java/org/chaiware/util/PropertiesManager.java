@@ -99,16 +99,13 @@ public class PropertiesManager {
 	}
 	
 	/**
-	 * Stores propeties to XML property file.
+	 * Stores properties to XML property file.
 	 */
 	public void save(){
 		try {
 			props.storeToXML(new FileOutputStream(file), null);
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}	
+		}
 	}
 }
- 

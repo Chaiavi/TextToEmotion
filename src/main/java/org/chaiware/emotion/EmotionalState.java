@@ -1,9 +1,6 @@
 package org.chaiware.emotion;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 
 /**
@@ -33,9 +30,7 @@ public class EmotionalState {
 	private EmotionalState previous;
 	private SortedSet<Emotion> emotions;
 
-	/**
-	 * Empty class constructor
-	 */
+
 	public EmotionalState() {
 		this("");
 	}
@@ -57,7 +52,7 @@ public class EmotionalState {
 	 * valence, and all of the emotional weights (in a form of a SortedSet).
 	 * 
 	 * @param text {@link String} representing the text
-	 * @param emotions {@link SortedSet} containing all of the specific Ekman emotinal
+	 * @param emotions {@link SortedSet} containing all of the specific Ekman emotional
 	 *            weights, defined by the {@link Emotion} class
 	 * @param generalWeight double representing the general emotional weight
 	 * @param valence int representing the emotinal valence
@@ -87,7 +82,7 @@ public class EmotionalState {
 	 * @return list of emotions ({@link Emotion} instances) with the highest weight
 	 */
 	public List<Emotion> getFirstStrongestEmotions(int stop) {
-		List<Emotion> value = new ArrayList<Emotion>();
+		List<Emotion> value = new ArrayList();
 		for (Emotion e : emotions) {
 			if (stop <= 0) {
 				break;
@@ -297,18 +292,23 @@ public class EmotionalState {
 	}
 
 	/**
-	 * Transforms emotional data into a descriptional sentence ('toString' method)
+	 * Transforms emotional data into a descriptive sentence ('toString' method)
 	 * 
 	 * @return String description of a emotinal data
 	 */
 	@Override
 	public String toString() {
-		return "Text: " + text + "\nGeneral weight: " + generalWeight
-		+ "\nValence: " + valence + "\nHappiness weight: "
-		+ getHappinessWeight() + "\nSadness weight: "
-		+ getSadnessWeight() + "\nAnger weight: " + getAngerWeight()
-		+ "\nFear weight: " + getFearWeight() + "\nDisgust weight: "
-		+ getDisgustWeight() + "\nSurprise weight: "
-		+ getSurpriseWeight() + "\n";
+		StringJoiner sj = new StringJoiner("\n");
+		sj.add("Text: " + text);
+		sj.add("General weight: " + generalWeight);
+		sj.add("Valence: " + valence);
+		sj.add("Happiness weight: " + getHappinessWeight());
+		sj.add("Sadness weight: " + getSadnessWeight());
+		sj.add("Anger weight: " + getAngerWeight());
+		sj.add("Fear weight: " + getFearWeight());
+		sj.add("Disgust weight: " + getDisgustWeight());
+		sj.add("Surprise weight: " + getSurpriseWeight());
+
+		return sj.toString();
 	}
 }

@@ -35,11 +35,12 @@ public class Emotion implements Comparable<Emotion> {
 	/**
 	 * Compares weights of current object and the one from the argument.
 	 * 
-	 * @param arg0 {@link Emotion} which is to compared to the current one
+	 * @param emotion {@link Emotion} which is to compared to the current one
 	 * @return integer representing the result
 	 */
-	public int compareTo(Emotion arg0) {
-		int value = (int) (100 * (arg0.getWeight() - weight));
+	@Override
+	public int compareTo(Emotion emotion) {
+		int value = (int) (100 * (emotion.getWeight() - weight));
 		// make sure each emotion will be considered, even if it is weight-even with another one
 		if (value == 0)
 			return 1;

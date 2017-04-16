@@ -11,7 +11,7 @@ import org.chaiware.emotion.AffectWord;
 public class HeuristicsUtility {
 
 	/**
-	 * Computes emoticon qoef for the sentence. Qoef is based on number of
+	 * Computes emoticon qoef for the sentence. Qoef is based on the number of
 	 * important chars in an emotion (e.g. ')' in ':)))))' ).
 	 * 
 	 * @param sentence {@link String} representing the sentence
@@ -31,7 +31,7 @@ public class HeuristicsUtility {
 	}
 
 	/**
-	 * Computes emoticon qoef for the word. Qoef is based on number of important
+	 * Computes emoticon qoef for the word. Qoef is based on number the of important
 	 * chars in an emotion (e.g. ')' in ':)))))' ).
 	 * 
 	 * @param word {@link String} representing the word
@@ -41,8 +41,7 @@ public class HeuristicsUtility {
 	public static double computeEmoticonQoef(String word, AffectWord emoticon) {
 		if (emoticon.startsWithEmoticon()) {
 			String emotiveWord = emoticon.getWord();
-			return 1.0 + (0.2 * countChars(word, emotiveWord.charAt(emotiveWord
-					.length() - 1)));
+			return 1.0 + (0.2 * countChars(word, emotiveWord.charAt(emotiveWord.length() - 1)));
 		} else {
 			return 1.0;
 		}
@@ -79,35 +78,36 @@ public class HeuristicsUtility {
 	 * @param word {@link String} representing the word
 	 * @return double representing the upper case qoeficient
 	 */
-	public static double computeCapsLockQoef(String word) {
-		if (isCapsLock(word))
+	public static double computeUpperCasedQoef(String word) {
+		if (isUpperCasedWord(word))
 			return 1.5;
 		else
 			return 1.0;
 	}
 	
 	/**
-	 * Computes the exclamination qoef -- function of a number of '!' chars in a sentence.
+	 * Computes the exclamation qoef -- function of a number of '!' chars in a sentence.
 	 * 
 	 * @param text {@link String} representing the sentence 
-	 * @return double representing the exclamination qoef
+	 * @return double representing the exclamation qoef
 	 */
-	public static double computeExclaminationQoef(String text) {
+	public static double computeExclamationQoef(String text) {
 		return 1.0 + (0.2 * countChars(text, '!'));
 	}
 	
 	/**
-	 * Returns is there a "!?" or a "?!" in a sentece.
+	 * Returns is there a "!?" or a "?!" in a sentence.
 	 * 
 	 * @param text {@link String} representing the sentence 
-	 * @return boolean representing the existance of a "!?" or a "?!" 
+	 * @return boolean representing the existence of a "!?" or a "?!"
 	 */
-	public static boolean hasExclaminationQuestionMarks(String text) {
+	public static boolean hasExclamationQuestionMarks(String text) {
 
 		return text.contains("?!") || text.contains("!?");
 	}
 
-	private static boolean isCapsLock(String word) {
+	/** Returns true when all of the word is upper cased */
+	private static boolean isUpperCasedWord(String word) {
 		for (int i = 0; i < word.length(); i++) {
 			if (Character.isLowerCase(word.charAt(i)))
 				return false;
