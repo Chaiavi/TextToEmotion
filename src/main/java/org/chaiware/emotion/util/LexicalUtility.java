@@ -8,12 +8,15 @@ import java.util.List;
 
 import org.chaiware.emotion.AffectWord;
 import org.chaiware.util.PropertiesManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utility class for some text processing algorithms (Singleton)
  */
 public class LexicalUtility {
 
+    private static Logger logger = LoggerFactory.getLogger(LexicalUtility.class);
 	private static LexicalUtility instance;
 
 	private String FILENAME_LEXICON = "/data/lex/lexicon.txt";
@@ -36,6 +39,8 @@ public class LexicalUtility {
 		intensityModifiers = ParsingUtility.splitWords(pm.getProperty("intensity.modifiers"), ", ");
 		parseLexiconFile(affectWords, FILENAME_LEXICON);
 		parseLexiconFile(emoticons, FILENAME_EMOTICONS);
+
+		logger.debug("Lexical Utility Instantiated");
 	}
 
 	/**
@@ -54,15 +59,18 @@ public class LexicalUtility {
 
 	private void parseLexiconFile(List<AffectWord> wordList, String fileName) throws IOException {
 
-	  try (BufferedReader in = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(fileName), "UTF8"))){
+      try (BufferedReader in = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(fileName), "UTF8"))) {
+
         String line = in.readLine();
         while (line != null) {
           AffectWord record = parseLine(line);
           wordList.add(record);
           line = in.readLine();
         }
+
+        logger.debug("Parsed lexicon file: {}", fileName);
       }
-	}
+    }
 
 	/**
 	 * Parses one line of the Lexicon and returns the {@link AffectWord}

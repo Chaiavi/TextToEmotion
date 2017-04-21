@@ -1,7 +1,9 @@
 package org.chaiware.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -10,7 +12,8 @@ import java.util.Properties;
  * A class for handling XML property files.
  */
 public class PropertiesManager {
-	
+
+    Logger logger = LoggerFactory.getLogger(PropertiesManager.class);
 	private Properties props;
 	private File file;
 	
@@ -21,13 +24,13 @@ public class PropertiesManager {
 	 */
 	
 	public PropertiesManager(String fileName) {
-		props = new Properties();
+	  props = new Properties();
 
 		try {
 			props.loadFromXML(this.getClass().getResourceAsStream(fileName));
 		}  catch (IOException e) {
 			props = new Properties();
-			e.printStackTrace();
+			logger.error("Failed loading properties", e);
 		}
 	}
 	
@@ -105,7 +108,7 @@ public class PropertiesManager {
 		try {
 			props.storeToXML(new FileOutputStream(file), null);
 		} catch (Exception e) {
-			e.printStackTrace();
+		    logger.error("Failed saving properties", e);
 		}
 	}
 }

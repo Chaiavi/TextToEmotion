@@ -8,6 +8,8 @@ import java.util.TreeSet;
 import org.chaiware.emotion.util.HeuristicsUtility;
 import org.chaiware.emotion.util.LexicalUtility;
 import org.chaiware.emotion.util.ParsingUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Defines logic for transferring textual affect information, emotional
@@ -16,11 +18,13 @@ import org.chaiware.emotion.util.ParsingUtility;
  */
 public class Empathyscope {
 
+    private static Logger logger = LoggerFactory.getLogger(Empathyscope.class);
 	private static Empathyscope instance;
 	private LexicalUtility lexUtil;
 
 	private Empathyscope() throws IOException {
 		lexUtil = LexicalUtility.getInstance();
+		logger.info("Empathy Scope Instantiated");
 	}
 
 	/**
@@ -53,7 +57,7 @@ public class Empathyscope {
 
 		for (String sentence : sentences) {
 			
-			System.out.println("- " + sentence);
+			logger.debug("- " + sentence);
 			
 			// we imply 6 heuristic rules to adjust emotive weights of the words:
 			// (1) more exclamation signs in a sentence => more intensive emotive weights
