@@ -52,7 +52,7 @@ public class Empathyscope {
 	public EmotionalState feel(String text) throws IOException {
 
 		text = text.replace('\n', ' ');
-		List<AffectWord> affectWords = new ArrayList();
+                List<AffectWord> affectWords = new ArrayList<>();
 		List<String> sentences = ParsingUtility.parseSentences(text);
 
 		for (String sentence : sentences) {
