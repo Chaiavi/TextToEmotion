@@ -1,6 +1,10 @@
 package org.chaiware.emotion;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 
 /**
@@ -81,18 +85,11 @@ public class EmotionalState {
 	 * @param stop int representing the number of emotions which is to searched for
 	 * @return list of emotions ({@link Emotion} instances) with the highest weight
 	 */
-	public List<Emotion> getFirstStrongestEmotions(int stop) {
-		List<Emotion> value = new ArrayList();
-		for (Emotion e : emotions) {
-			if (stop <= 0) {
-				break;
-			}
-			value.add(e);
-			stop--;
-		}
-
-		return value;
-	}
+        public List<Emotion> getFirstStrongestEmotions(int stop) {
+                return emotions.stream()
+                        .limit(stop)
+                        .collect(Collectors.toList());
+        }
 
 	/**
 	 * Getter for the {@link Emotion} of happiness.

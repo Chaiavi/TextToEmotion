@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.chaiware.emotion.AffectWord;
 import org.chaiware.util.PropertiesManager;
@@ -31,9 +32,9 @@ public class LexicalUtility {
 
 	private final double NORMALISATOR = 1;
 
-	private LexicalUtility() throws IOException {
-		affectWords = new ArrayList();
-		emoticons = new ArrayList();
+        private LexicalUtility() throws IOException {
+                affectWords = new ArrayList<>();
+                emoticons = new ArrayList<>();
 		PropertiesManager pm = new PropertiesManager(FILENAME_PROPERTIES);
 		negations = ParsingUtility.splitWords(pm.getProperty("negations"), ", ");
 		intensityModifiers = ParsingUtility.splitWords(pm.getProperty("intensity.modifiers"), ", ");
@@ -102,15 +103,13 @@ public class LexicalUtility {
 	 * @param word {@link String} representing the word
 	 * @return {@link AffectWord}
 	 */
-	public AffectWord getAffectWord(String word) {
-		for (AffectWord affectWord : affectWords) {
-			if (affectWord.getWord().equals(word)) {
-				return affectWord.clone();
-			}
-		}
-
-		return null;
-	}
+        public AffectWord getAffectWord(String word) {
+                return affectWords.stream()
+                        .filter(aw -> aw.getWord().equals(word))
+                        .findFirst()
+                        .map(AffectWord::clone)
+                        .orElse(null);
+        }
 
 	/**
 	 * Returns the instance of {@link AffectWord} for the given word, which is emoticon.
@@ -118,23 +117,18 @@ public class LexicalUtility {
 	 * @param word {@link String} representing the word
 	 * @return {@link AffectWord}
 	 */
-	public AffectWord getEmoticonAffectWord(String word) {
-		for (AffectWord affectWordEmoticon : emoticons) {
-			if (affectWordEmoticon.getWord().equals(word)) {
-				return affectWordEmoticon.clone();
-			}
-		}
-
-		for (AffectWord affectWordEmoticon : emoticons) {
-			String emoticon = affectWordEmoticon.getWord();
-			if (ParsingUtility.containsFirst(word, emoticon)) {
-				affectWordEmoticon.setStartsWithEmoticon(true);
-				return affectWordEmoticon.clone();
-			}
-		}
-
-		return null;
-	}
+        public AffectWord getEmoticonAffectWord(String word) {
+                return emoticons.stream()
+                        .filter(em -> em.getWord().equals(word))
+                        .findFirst()
+                        .map(AffectWord::clone)
+                        .orElseGet(() -> emoticons.stream()
+                                .filter(em -> ParsingUtility.containsFirst(word, em.getWord()))
+                                .peek(em -> em.setStartsWithEmoticon(true))
+                                .findFirst()
+                                .map(AffectWord::clone)
+                                .orElse(null));
+        }
 
 	/**
 	 * Returns all instances of {@link AffectWord} which represent emoticons for the given sentence.
@@ -144,17 +138,11 @@ public class LexicalUtility {
 	 */
 	public List<AffectWord> getEmoticonWords(String sentence) {
 
-		List<AffectWord> value = new ArrayList ();
-		for (AffectWord emoticon : emoticons) {
-			String emoticonWord = emoticon.getWord();
-			if (sentence.contains(emoticonWord)) {
-				emoticon.setStartsWithEmoticon(true);
-				value.add(emoticon);
-			}
-		}
-
-		return value;
-	}
+                return emoticons.stream()
+                        .filter(emoticon -> sentence.contains(emoticon.getWord()))
+                        .peek(e -> e.setStartsWithEmoticon(true))
+                        .collect(Collectors.toList());
+        }
 
 	/**
 	 * Returns all instances of {@link AffectWord}

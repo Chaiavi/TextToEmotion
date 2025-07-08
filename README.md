@@ -1,7 +1,7 @@
 # TextToEmotion
 Parses text in order to recognize the emotions in it
 
-TextToEmotions reads the block of text, parses emotions from it, then returns a response object containing the percent value propability of each emotion.
+TextToEmotions reads the block of text, parses emotions from it, then returns a response object containing the percent value probability of each emotion.
 
 The library's core logic was taken from Synesketch http://krcadinac.com/synesketch/, which has a GPL v2.0 license.
 
