@@ -1,6 +1,7 @@
 package org.chaiware.emotion;
 
 import java.util.ArrayList;
+import java.util.StringJoiner;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -47,8 +48,8 @@ public class EmotionalState {
 	public EmotionalState(String text) {
 
 		this.text = text;
-		emotions = new TreeSet<Emotion>();
-		emotions.add(new Emotion(1.0, Emotion.NEUTRAL));
+                emotions = new TreeSet<>();
+                emotions.add(new Emotion(1.0, EmotionType.NEUTRAL));
 	}
 
 	/**
@@ -97,9 +98,9 @@ public class EmotionalState {
 	 * @return {@link Emotion} of happiness
 	 */
 	public Emotion getHappiness() {
-		Emotion value = new Emotion(0.0, Emotion.HAPPINESS);
+                Emotion value = new Emotion(0.0, EmotionType.HAPPINESS);
 		for (Emotion e : emotions) {
-			if (e.getType() == Emotion.HAPPINESS) {
+                        if (e.getType() == EmotionType.HAPPINESS) {
 				value = e;
 			}
 		}
@@ -122,9 +123,9 @@ public class EmotionalState {
 	 * @return {@link Emotion} of sadness
 	 */
 	public Emotion getSadness() {
-		Emotion value = new Emotion(0.0, Emotion.SADNESS);
+                Emotion value = new Emotion(0.0, EmotionType.SADNESS);
 		for (Emotion e : emotions) {
-			if (e.getType() == Emotion.SADNESS) {
+                        if (e.getType() == EmotionType.SADNESS) {
 				value = e;
 			}
 		}
@@ -147,9 +148,9 @@ public class EmotionalState {
 	 * @return {@link Emotion} of fear
 	 */
 	public Emotion getFear() {
-		Emotion value = new Emotion(0.0, Emotion.FEAR);
+                Emotion value = new Emotion(0.0, EmotionType.FEAR);
 		for (Emotion e : emotions) {
-			if (e.getType() == Emotion.FEAR) {
+                        if (e.getType() == EmotionType.FEAR) {
 				value = e;
 			}
 		}
@@ -172,9 +173,9 @@ public class EmotionalState {
 	 * @return {@link Emotion} of anger
 	 */
 	public Emotion getAnger() {
-		Emotion value = new Emotion(0.0, Emotion.ANGER);
+                Emotion value = new Emotion(0.0, EmotionType.ANGER);
 		for (Emotion e : emotions) {
-			if (e.getType() == Emotion.ANGER) {
+                        if (e.getType() == EmotionType.ANGER) {
 				value = e;
 			}
 		}
@@ -197,9 +198,9 @@ public class EmotionalState {
 	 * @return {@link Emotion} of disgust
 	 */
 	public Emotion getDisgust() {
-		Emotion value = new Emotion(0.0, Emotion.DISGUST);
+                Emotion value = new Emotion(0.0, EmotionType.DISGUST);
 		for (Emotion e : emotions) {
-			if (e.getType() == Emotion.DISGUST) {
+                        if (e.getType() == EmotionType.DISGUST) {
 				value = e;
 			}
 		}
@@ -222,9 +223,9 @@ public class EmotionalState {
 	 * @return {@link Emotion} of surprise
 	 */
 	public Emotion getSurprise() {
-		Emotion value = new Emotion(0.0, Emotion.SURPRISE);
+                Emotion value = new Emotion(0.0, EmotionType.SURPRISE);
 		for (Emotion e : emotions) {
-			if (e.getType() == Emotion.SURPRISE) {
+                        if (e.getType() == EmotionType.SURPRISE) {
 				value = e;
 			}
 		}

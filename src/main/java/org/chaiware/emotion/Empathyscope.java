@@ -171,20 +171,20 @@ public class Empathyscope {
 		else if (valence < 0)
 			generalValence = -1;
 
-		if (happinessWeight > 0)
-			emotions.add(new Emotion(happinessWeight, Emotion.HAPPINESS));
-		if (sadnessWeight > 0)
-			emotions.add(new Emotion(sadnessWeight, Emotion.SADNESS));
-		if (angerWeight > 0)
-			emotions.add(new Emotion(angerWeight, Emotion.ANGER));
-		if (fearWeight > 0)
-			emotions.add(new Emotion(fearWeight, Emotion.FEAR));
-		if (disgustWeight > 0)
-			emotions.add(new Emotion(disgustWeight, Emotion.DISGUST));
-		if (surpriseWeight > 0)
-			emotions.add(new Emotion(surpriseWeight, Emotion.SURPRISE));
-		if (emotions.isEmpty())
-			emotions.add(new Emotion((0.2 + generalWeight) / 1.2, Emotion.NEUTRAL));
+                if (happinessWeight > 0)
+                        emotions.add(new Emotion(happinessWeight, EmotionType.HAPPINESS));
+                if (sadnessWeight > 0)
+                        emotions.add(new Emotion(sadnessWeight, EmotionType.SADNESS));
+                if (angerWeight > 0)
+                        emotions.add(new Emotion(angerWeight, EmotionType.ANGER));
+                if (fearWeight > 0)
+                        emotions.add(new Emotion(fearWeight, EmotionType.FEAR));
+                if (disgustWeight > 0)
+                        emotions.add(new Emotion(disgustWeight, EmotionType.DISGUST));
+                if (surpriseWeight > 0)
+                        emotions.add(new Emotion(surpriseWeight, EmotionType.SURPRISE));
+                if (emotions.isEmpty())
+                        emotions.add(new Emotion((0.2 + generalWeight) / 1.2, EmotionType.NEUTRAL));
 
 		return new EmotionalState(text, emotions, generalWeight, generalValence);
 	}
