@@ -4,21 +4,13 @@ package org.chaiware.emotion;
  * Represents one emotion, with its type and weight.
  * <p>
  * Emotion types are the ones defined by Ekman: happiness, sadness, fear, anger,
- * disgust, surprise. These types are defines by the static attributes of this class.
+ * disgust, surprise. These types are defined by {@link EmotionType}.
  */
 
 public class Emotion implements Comparable<Emotion> {
 
-	public static int NEUTRAL = -1;
-	public static int HAPPINESS = 0;
-	public static int SADNESS = 1;
-	public static int FEAR = 2;
-	public static int ANGER = 3;
-	public static int DISGUST = 4;
-	public static int SURPRISE = 5;
-
-	private double weight;
-	private int type;
+        private double weight;
+        private EmotionType type;
 
 	/**
 	 * Class constructor which sets weight and type of the emotion.
@@ -27,10 +19,10 @@ public class Emotion implements Comparable<Emotion> {
 	 *            values between 0 and 1)
 	 * @param type type of the emotion (happiness, sadness, fear, anger, disgust, or surprise)
 	 */
-	public Emotion(double weight, int type) {
-		this.weight = weight;
-		this.type = type;
-	}
+        public Emotion(double weight, EmotionType type) {
+                this.weight = weight;
+                this.type = type;
+        }
 
 	/**
 	 * Compares weights of current object and the one from the argument.
@@ -53,18 +45,18 @@ public class Emotion implements Comparable<Emotion> {
 	 * 
 	 * @return emotion type (integer constant defined by this class)
 	 */
-	public int getType() {
-		return type;
-	}
+        public EmotionType getType() {
+                return type;
+        }
 
 	/**
 	 * Setter for the emotion type
 	 * 
 	 * @param type emotion type (integer constant defined by this class)
 	 */
-	public void setType(int type) {
-		this.type = type;
-	}
+        public void setType(EmotionType type) {
+                this.type = type;
+        }
 
 	/**
 	 * Getter for the emotional weight
@@ -90,6 +82,6 @@ public class Emotion implements Comparable<Emotion> {
 	 * @return a string representation of the object
 	 */
 	public String toString() {
-		return "Type number: " + type + ", weight: " + weight;
-	}
+                return "Type: " + type + ", weight: " + weight;
+        }
 }
