@@ -1,3 +1,9 @@
+# PROJECT CLOSED
+This project is no longer relevant in these days of AI
+This project's emotion detection is old and not accurate
+Project is closed...
+
+
 # TextToEmotion
 Parses text in order to recognize the emotions in it
 
